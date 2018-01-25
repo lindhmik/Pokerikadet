@@ -1,0 +1,60 @@
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: ruutu Q, hertta K, pata K, pata Q, ruutu K, )
+Paras käsi: Täyskäsi: QQKKK
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: hertta K, ruutu Q, risti K, hertta Q, risti Q, )
+Paras käsi: Täyskäsi: KKQQQ
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: ruutu 9, pata 10, ruutu J, risti J, risti Q, )
+Paras käsi: Pari: JJ
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: hertta K, hertta Q, hertta J, hertta 9, hertta 10, )
+Paras käsi: Värisuora
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: hertta 10, hertta A, hertta J, hertta Q, hertta K, )
+Paras käsi: Värisuora
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: hertta 3, hertta 4, hertta Q, hertta A, hertta K, )
+Paras käsi: Väri
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: hertta 5, pata 2, ruutu 2, pata 10, risti 10, )
+Paras käsi: Kaksi paria: 221010
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 2 käsi: pata 7, ruutu 9, risti A, hertta 6, hertta K, )
+Paras käsi: Korkein kortti: A
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 3 käsi: ruutu A, hertta 7, pata A, pata J, hertta 4, )
+Paras käsi: Pari: AA
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 1 käsi: ruutu K, ruutu 5, risti Q, risti 4, pata 9, )
+Paras käsi: Korkein kortti: K
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 2 käsi: pata 7, risti 6, hertta 9, ruutu 10, pata A, )
+Paras käsi: Korkein kortti: A
+**************************************************
+Pelin tiedot:
+
+(Pelaajan Pelaaja 3 käsi: ruutu 4, hertta 5, ruutu 6, pata K, ruutu A, )
+Paras käsi: Korkein kortti: A
+**************************************************

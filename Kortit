@@ -1,0 +1,161 @@
+import random
+#Luokka sisältää korttipakan, sekä metodit korttien jakamiselle ja käden tarkastamiselle
+class Pokerikone:
+    arvot = [i for i in range(1,14)]
+    maat = ["hertta","ruutu", "risti", "pata"]
+    pakka= []
+
+    for maa in maat: #luodaan pakka yhdeksi listaksi
+        for arvo in arvot:
+            if arvo < 10:
+                arvo= "0"+str(arvo) #yhdenmukaistetaan numeroinnit myöhemmän parsimisen helpottamiseksi
+            pakka.append(maa + ":" +str(arvo))
+
+    def jaaKortit(self): #metodi palauttaa pelikortin ja poistaa sen pakasta
+
+        self.kortti= self.pakka[random.randint(0,len(self.pakka)-1)]
+        self.pakka.remove(self.kortti)
+        return self.kortti
+
+    #metodi tarkastaa onko käsi pariutunut ja palauttaa tuloksen/ mikäli ei pareja, niin kutsuu metodia
+    #joka tarkastaa onko kädessä väriä, suoraa tai värisuoraa
+    def haeParit(self, kasi):
+        kortti=""
+        pari1=0 #ensin löytyvä pari
+        pari2=0 #tarvitaan erottelemaan kaksi paria/täyskäsi
+        osumat=[] #talletetaan osuneiden parien silmäluku
+        for x in range(len(kasi)-1):
+            montaSamaa = 0
+            kortti=kasi[x][-2:]
+
+            if len(osumat) == 0 or kortti != osumat[0]: #varmistetaan ettei käsitellä esim. tapausta 8x88y kahtena parina
+                for z in range(x+1,len(kasi)):
+                    #mikäli pariutuu ja havaittavissa ei aiempia pariutumisia, niin lasketaan löydös pari1 muuttujaan:
+                    if kasi[z][-2:] == kortti and pari1 == 0 or kasi[z][-2:] == kortti and kortti == osumat[0]:
+                       pari1 += 1
+                       osumat.append(kortti)
+
+                    #pariutuneita kortteja löytynyt aiemmin. Sijoitetaan muuttujaan 2:
+                    elif kasi[z][-2:] == kortti and pari1 != 0:
+                        if pari2<2:
+                            pari2 += 1
+                        osumat.append(kortti)
+        #Muutetaan myöhemmin esitettävän osumalistan numerot "oikeaan" muotoon:
+        for i in range(len(osumat)):
+            osumat[i] = self.parsiKuvat(osumat[i])
+
+
+        #Jos pari2:ssa tavaraa, tarkastetaan onko kyseessä kaksi paria vai täyskäsi:
+        if pari2 != 0:
+            summa = pari1 + pari2
+            if summa >2:
+                return "Täyskäsi: " + osumat[0]*(pari1+1)+osumat[len(osumat)-1]*(pari2+1)
+            elif summa==2:
+                return "Kaksi paria: "+ osumat[0]*(pari1+1) + osumat[len(osumat)-1]*(pari2+1)
+        #Muussa tapauksessa tarkastetaan onko pariutumisia, kolmosia tai nelosia:
+        if pari1 == 1 and pari2 == 0 or pari1 == 0 and pari2 == 1:
+            return "Pari: "+ osumat[0]*2
+        elif pari1 == 2 and pari2 == 0 or pari1 == 0 and pari2 == 2:
+            return "Kolme samaa :" + osumat[0]*3
+        elif pari1 == 3 and pari2 == 0 or pari1 == 0 and pari2 == 3:
+            return "Neloset: "+ osumat[0]*4
+        #Mikäli paritumista ei tapahtunut, niin parsitaan käsi helposti tarkistettavaan muotoon suorat ja värin
+        #tarkastavalle metodille ja annetaan kutsun parametreina mukaan
+        else:
+            vari=[]
+            suora=[]
+            for k in kasi:
+                vari.append(k[:-3])
+                suora.append(int(k[-2:]))
+            vari.sort()
+            suora.sort()
+            tulos=self.variSuora(vari,suora)
+            return tulos
+
+
+#Testataan onko kädessä suoraa, väriä tai värisuoraa:
+    def variSuora(self,vari,suora):
+        samaaMaata=vari.count(vari[0])
+        if suora[4]==suora[0]+4:
+            if samaaMaata==5:
+                return "Värisuora"
+            else:
+                return "Suora"
+        if suora[0] == 1 and suora[1] == 10 and suora[4]==13:
+            if samaaMaata==5:
+                return "Värisuora"
+            else:
+                return "Suora"
+
+        elif samaaMaata == 5:
+            return "Väri"
+        elif suora[0] == 1:
+            return "Korkein kortti: A"
+        else:
+            return "Korkein kortti: " + self.parsiKuvat(str(suora[4]))
+    #Metodi muuttaa kuvakortit ja ässät "oikeaan" esitysmuotoon:
+    def parsiKuvat(self, kuvaKortti):
+
+            if kuvaKortti == "01":
+                return "A"
+            elif kuvaKortti == "11":
+                return "J"
+            elif kuvaKortti == "12":
+                return "Q"
+            elif kuvaKortti == "13":
+                return "K"
+            elif kuvaKortti == "10":
+                return "10"
+            else:
+                return kuvaKortti[-1:]
+
+#Tulostetaan käsi, sekä siinä havaittu paras tulos pelaajille:
+    def tulostus(self,kasi,tulos):
+        tuloste="Pelaajan "+kasi[0] + " käsi: "
+        tekstiTiedostoon = tuloste
+        for i in range(1,len(kasi)):
+            if kasi[i][:-3]=="hertta":
+                kortti="\u2665"
+            elif kasi[i][:-3]=="pata":
+                kortti = "\u2660"
+            elif kasi[i][:-3]=="ruutu":
+                kortti = "\u2666"
+            elif kasi[i][:-3] == "risti":
+                kortti = "\u2663"
+            kortti += self.parsiKuvat(kasi[i][-2:])
+            tuloste += kortti + " "
+            tekstiTiedostoon += kasi[i][:-3] + " " + self.parsiKuvat(kasi[i][-2:]) + ", "
+        print ("*"*50)
+        print(tuloste)
+        print("Paras käsi: " + str(tulos))
+        print("*" * 50)
+        tiedosto=open("analysis.txt","a")
+        tiedosto.write("Pelin tiedot:" + "\n\n(" + tekstiTiedostoon + ")\nParas käsi: " + str(tulos) + "\n" + 50*"*" + "\n")
+        tiedosto.close()
+
+#Pokeripelin tapahtumat:
+class pelaa(Pokerikone):
+
+    def main():
+        pelaajaNro=1
+        pelaajat=[]
+        while len(pelaajat)<3:
+            #pelaajat.append([input("Syötä pelaajan nimi: ")])
+
+            #sijoitetaan pelaajat listaan kullekin pelaajalle yksilöity lista, johon säilötään pelaajan nimi ja hänelle jaettu käsi
+            pelaajat.append(["Pelaaja " + str(pelaajaNro)])
+            pelaajaNro+=1
+        pakka=Pokerikone()
+
+        for p in pelaajat*5:
+            p.append(pakka.jaaKortit()) #jaetaan kortit
+
+
+        for p in pelaajat:
+            tulos=pakka.haeParit(p[1:6]) #haetaan tulokser
+            pakka.tulostus(p,tulos)     #tulostetaan pelin tiedot
+
+
+    main()
+
+
